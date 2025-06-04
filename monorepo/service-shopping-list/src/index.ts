@@ -38,7 +38,7 @@ router.put("/shopping-list/items/:itemId", {
   pathValidator: zValidator(
     z.object({
       itemId: z.string(),
-    })
+    }),
   ),
   handler: async (c) => {
     const item = c.req.valid("json");
@@ -51,7 +51,7 @@ router.del("/shopping-list/items/:itemId", {
   pathValidator: zValidator(
     z.object({
       itemId: z.string(),
-    })
+    }),
   ),
   handler: async (c) => {
     const { itemId } = c.req.valid("param");
@@ -71,5 +71,5 @@ serve(
   },
   (info) => {
     console.log(`Server is running on http://localhost:${info.port}`);
-  }
+  },
 );

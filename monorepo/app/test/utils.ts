@@ -12,10 +12,10 @@ type AddCookies = (
     value: string;
     path: string;
     domain: string;
-  }[]
+  }[],
 ) => Promise<void>;
 
-export interface MockEndpointExample {
+export interface StubEndpointExample {
   "http-request": {
     path: string;
     method: "GET" | "POST" | "PATCH" | "PUT" | "DELETE";
@@ -26,8 +26,8 @@ export interface MockEndpointExample {
     body?: unknown;
   };
 }
-export interface MockEndpointExamplePartial {
-  partial: MockEndpointExample;
+export interface StupEndpointExamplePartial {
+  partial: StubEndpointExample;
 }
 
 interface GoToOptions {
@@ -36,18 +36,18 @@ interface GoToOptions {
 
 type GoTo = (path: string, options?: GoToOptions) => ReturnType<Page["goto"]>;
 
-export type MockEndpoint = (
-  example: MockEndpointExample | MockEndpointExamplePartial
+export type StubEndpoint = (
+  example: StubEndpointExample | StupEndpointExamplePartial,
 ) => Promise<void>;
 
 export type Precondition = ({
   addCookies,
   localStorage,
-  mockEndpoint,
+  stubEndpoint,
 }: {
   addCookies: AddCookies;
   localStorage: Storage;
-  mockEndpoint: MockEndpoint;
+  stubEndpoint: StubEndpoint;
 }) => void;
 
 type Prepare = (precondition: Precondition) => Promise<void>;
@@ -58,7 +58,7 @@ export interface Driver {
   getByRole: Page["getByRole"];
   getByText: Page["getByText"];
   goTo: GoTo;
-  mockEndpoint: MockEndpoint;
+  stubEndpoint: StubEndpoint;
   prepare: Prepare;
 }
 
@@ -120,7 +120,7 @@ const makeDriver = ({
     getByText(name, options) {
       return page.getByText(name, options);
     },
-    async mockEndpoint(example) {
+    async stubEndpoint(example) {
       await fetch("http://localhost:3010/_specmatic/expectations", {
         method: "POST",
         body: JSON.stringify(example),
@@ -130,7 +130,7 @@ const makeDriver = ({
       await precondition({
         addCookies: this.addCookies,
         localStorage: localStorageFake,
-        mockEndpoint: this.mockEndpoint,
+        stubEndpoint: this.stubEndpoint,
       });
     },
   };
