@@ -1,4 +1,4 @@
-# Stop E2E Testing Your Next.js App!
+# Stop Doing E2E Tests!
 
 > How to Use Contracts to Write Better Tests for Nuxt Applications
 

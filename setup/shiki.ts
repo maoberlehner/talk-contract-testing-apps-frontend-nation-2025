@@ -7,7 +7,7 @@ export default defineShikiSetup(() => {
       dark: "min-dark",
       light: "min-light",
     },
-    langs: ["ts", "tsx", "json", "diff", "bash"],
+    langs: ["ts", "tsx", "vue", "json", "diff", "bash"],
     transformers: [transformerNotationDiff()],
   };
 });

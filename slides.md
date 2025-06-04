@@ -7,7 +7,7 @@ drawings:
   persist: false
 ---
 
-# Stop <span class="accent">E2E Testing</span><br>Your <span class="accent">Next.js</span> App!
+# Stop Doing <span class="accent">E2E Tests!</span>
 
 <div class="leading-12">
 Write Better Tests with Contract Tests
@@ -32,8 +32,8 @@ layout: intro
 ---
 
 <ol class="leading-17">
-  <li>Mocking has <strong>limits for production confidence</strong>.</li>
-  <li v-click>Microservices <strong>demand contracts</strong> for success.</li>
+  <li>E2E tests <strong>do not work with microservices</strong>.</li>
+  <li v-click>Mocking <strong>leads to false confidence</strong>.</li>
   <li v-click>How to test SSR apps <strong>using contract testing techniques</strong>.</li>
 </ol>
 
@@ -79,34 +79,24 @@ layout: statement
 layout: statement
 ---
 
-<div class="flex flex-col items-center justify-center gap-4">
-  <iframe src='https://app.sli.do/event/uxaS7eopszBrQkPY1tLfFh/embed/polls/1f3ff64e-1cc7-40cb-9529-2e1ed7e1f2b3' width='400' height='260'></iframe>
-  <img src="/images/qr-poll-microservices.svg" width="230">
-</div>
-
----
-layout: statement
----
-
 <h1>Don't Do E2E Testing<br>with <span class="accent">Microservices!</span></h1>
 
 ---
+layout: intro
+---
+
+<ul class="leading-17">
+  <li>E2E tests become <strong>slow and flaky</strong> with microservices.</li>
+  <li v-click>Services may be <strong>unavailable or unstable</strong> during testing.</li>
+  <li v-click>Testing across <strong>multiple service boundaries</strong> is complex.</li>
+  <li v-click>E2E tests <strong>prevent independent deployments</strong>.</li>
+</ul>
+
+---
 layout: statement
 ---
 
-<h1>But What To<br>Do <span class="accent">Instead?</span></h1>
-
----
-layout: statement
----
-
-<h1>How to Test<br><span class="accent">Microservice-Driven</span><br>Frontend Apps?</h1>
-
----
-layout: statement
----
-
-<h1>What About<br><span class="accent">Mocks?</span></h1>
+<h1>So What About<br><span class="accent">Mocking?</span></h1>
 
 ---
 layout: statement
@@ -119,7 +109,7 @@ layout: intro
 ---
 
 ```ts {all|3-9}
-// Mocking with Playwright
+// Mocking API responses in Playwright
 it('should be possible to remove an item', () => [
   await page.route('https://items.xyz.com/items', async route => {
     const json = [
@@ -137,10 +127,7 @@ it('should be possible to remove an item', () => [
 layout: statement
 ---
 
-<div class="flex flex-col items-center justify-center gap-4">
-  <iframe src='https://app.sli.do/event/uxaS7eopszBrQkPY1tLfFh/embed/polls/bf81a329-d5ed-4eb1-8e25-5ec5d513675b' width='400' height='260'></iframe>
-  <img src="/images/qr-poll-mocking.svg" width="230">
-</div>
+<h1>But <span class="accent">SSR Apps</span><br>are Different!</h1>
 
 ---
 layout: intro
@@ -150,11 +137,30 @@ layout: intro
 // app/page.tsx
 export default async function Home() {
   // ❌ We can't mock server-side fetch!
-  const items = await client.GET("/items");
+  const items = await fetch("https://items.xyz.com/items");
 
   return <ShoppingList items={items} />;
 }
 ```
+
+---
+layout: intro
+---
+
+```vue {all|2-3}
+<script setup lang="ts">
+// ❌ We can't mock server-side fetch!
+const { data } = await useFetch("https://items.xyz.com/items");
+
+// ...
+</script>
+```
+
+---
+layout: statement
+---
+
+<h1>Even Worse:<br><span class="accent">Mocks Lie!</span></h1>
 
 ---
 layout: statement
@@ -213,6 +219,17 @@ layout: statement
 <h1><span class="accent">Contract Testing</span><br>to the Rescue!</h1>
 
 ---
+layout: intro
+---
+
+<ul class="leading-17">
+  <li>Services agree on <strong>API specifications</strong></li>
+  <li v-click>Tests use <strong>real API contracts</strong>, not made-up mocks</li>
+  <li v-click>Changes to APIs are <strong>automatically detected</strong></li>
+  <li v-click>Both sides can <strong>deploy independently</strong></li>
+</ul>
+
+---
 layout: statement
 ---
 
@@ -228,23 +245,7 @@ layout: statement
 layout: statement
 ---
 
-<h1><span class="accent">Contract Testing</span><br>For Microservices<br>is a Must!</h1>
-
----
-layout: intro
----
-
-<ul class="leading-17">
-  <li>Microservices must be <strong>independently deployable</strong>.</li>
-  <li v-click>E2E tests hinder independent deployments.</li>
-  <li v-click>Without contracts, <strong>we can't deploy with confidence</strong>!</li>
-</ul>
-
----
-layout: statement
----
-
-<h1>Using <span class="accent">Contracts</span><br>to Test Client Apps</h1>
+<h1>From <span class="accent">E2E Tests</span><br>to <span class="accent">Application Tests</span></h1>
 
 ---
 layout: intro
@@ -260,9 +261,9 @@ layout: intro
 ---
 
 <ul class="leading-17">
-  <li>Run in a real browser.</li>
-  <li v-click>Interact with the app like a real user.</li>
-  <li v-click>Test the entire app, making real requests...</li>
+  <li>Run in a <strong>real browser</strong>.</li>
+  <li v-click>Interact with the app <strong>like a real user</strong>.</li>
+  <li v-click>Test the entire app, making <strong>real requests</strong>...</li>
   <li v-click>... but <strong>not</strong> to real services (but stubs)!</li> 
 </ul>
 
@@ -282,6 +283,18 @@ layout: statement
 layout: statement
 ---
 
+<img src="/images/shopping-list-test-stub.svg" style="width:900px">
+
+---
+layout: statement
+---
+
+<img src="/images/contract-push-service.svg" style="width:900px">
+
+---
+layout: statement
+---
+
 <img src="/images/contract-pull.svg" style="width:900px">
 
 ---
@@ -289,18 +302,6 @@ layout: statement
 ---
 
 <img src="/images/contract-push.svg" style="width:900px">
-
----
-layout: statement
----
-
-<img src="/images/shopping-list-test-stub.svg" style="width:900px">
-
----
-layout: statement
----
-
-<h1><span class="accent">Write Tests.</span><br>Not Too Many.<br><span class="line-through">Mostly Integration</span>.<br>Mostly Application.</h1>
 
 ---
 layout: statement
@@ -318,7 +319,7 @@ layout: statement
 layout: statement
 ---
 
-<h1>Use <span class="accent">Contract-Based Stubs</span><br>to Test Next.js Apps!</h1>
+<h1>Use <span class="accent">Contract-Based Stubs</span><br>to Test Frontend Apps!</h1>
 
 ---
 layout: intro
