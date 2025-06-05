@@ -1,19 +1,20 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+
+import { createRating } from "@/repositories/rating";
 import {
   createItem,
   deleteItem,
-  toggleItemCompleted,
   type ShoppingListItem,
+  toggleItemCompleted,
 } from "@/repositories/shopping-list";
-import { createRating } from "@/repositories/rating";
 
 type Action = "CREATE" | "TOGGLE" | "DELETE" | "RATE";
 
 export const updateShoppingList = async (
   previousItems: ShoppingListItem[],
-  formData: FormData
+  formData: FormData,
 ): Promise<ShoppingListItem[]> => {
   const action = formData.get("action") as Action;
 
@@ -35,7 +36,7 @@ export const updateShoppingList = async (
       await toggleItemCompleted(id);
       revalidatePath("/");
       return previousItems.map((item) =>
-        item.id === id ? { ...item, completed: !item.completed } : item
+        item.id === id ? { ...item, completed: !item.completed } : item,
       );
     }
     case "DELETE": {
@@ -61,7 +62,7 @@ export const updateShoppingList = async (
                 average: ((item.rating?.average || 0) + score) / 2,
               },
             }
-          : item
+          : item,
       );
     }
   }

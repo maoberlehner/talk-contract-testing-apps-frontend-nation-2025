@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format:check": "prettier --check --ignore-path .gitignore .",
+    "format": "prettier --write --ignore-path .gitignore .",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "contract:pull": "node --disable-warning=ExperimentalWarning ../utils/scripts/contract-pull.ts",
@@ -27,6 +29,7 @@
     "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
+    "@eslint/compat": "^1.2.9",
     "@eslint/eslintrc": "^3",
     "@playwright/test": "^1.52.0",
     "@tailwindcss/postcss": "^4",
@@ -34,8 +37,11 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.3.2",
+    "eslint-config-next": "15.3.3",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "openapi-typescript": "^7.8.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.12",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.0",
     "typescript": "^5"

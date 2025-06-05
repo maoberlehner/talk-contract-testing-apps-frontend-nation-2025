@@ -1,6 +1,8 @@
 import createClient from "openapi-fetch";
-import type { paths, components } from "./service-shopping-list";
+
 import { getAverageRating } from "@/repositories/rating";
+
+import type { components,paths } from "./service-shopping-list";
 
 const client = createClient<paths>({
   baseUrl:
@@ -33,14 +35,14 @@ export const getAllItems = async (): Promise<ShoppingListItem[]> => {
           average: averageRating.averageScore,
         },
       };
-    })
+    }),
   );
 
   return dataWithAverageRating;
 };
 
 export const createItem = async (
-  item: CreateShoppingListItemRequest
+  item: CreateShoppingListItemRequest,
 ): Promise<ShoppingListItem> => {
   const { data, error } = await client.POST("/shopping-list/items", {
     body: {

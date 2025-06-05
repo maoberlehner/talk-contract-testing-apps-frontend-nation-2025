@@ -1,15 +1,15 @@
 "use client";
 
-import { Plus, Square, RotateCcw, Trash2, Star } from "lucide-react";
+import { Plus, RotateCcw, Square, Star,Trash2 } from "lucide-react";
 import { useActionState, useState } from "react";
 
+import { updateShoppingList } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RatingModal } from "@/components/ui/rating-modal";
-import { updateShoppingList } from "@/app/actions";
-import type { ShoppingListItem } from "@/repositories/shopping-list";
 import { StarRating } from "@/components/ui/star-rating";
 import { cn } from "@/lib/utils";
+import type { ShoppingListItem } from "@/repositories/shopping-list";
 
 export function ShoppingListClient({
   items: itemsInitial,
@@ -18,7 +18,7 @@ export function ShoppingListClient({
 }) {
   const [items, updateShoppingListAction, isPending] = useActionState(
     updateShoppingList,
-    itemsInitial
+    itemsInitial,
   );
   const [ratingModal, setRatingModal] = useState<{
     isOpen: boolean;
@@ -70,7 +70,7 @@ export function ShoppingListClient({
 
       <div className="space-y-2">
         {pendingItems.length > 0 && (
-          <div className="text-sm font-medium text-muted-foreground mb-2">
+          <div className="text-muted-foreground mb-2 text-sm font-medium">
             Shopping List ({pendingItems.length})
           </div>
         )}
@@ -79,14 +79,14 @@ export function ShoppingListClient({
             <form
               key={item.id}
               action={updateShoppingListAction}
-              className="flex justify-between items-center gap-3 p-3 rounded-lg border bg-card"
+              className="bg-card flex items-center justify-between gap-3 rounded-lg border p-3"
             >
               <input type="hidden" name="id" value={item.id} />
               <input type="hidden" name="action" value="TOGGLE" />
               <button
                 className={cn(
-                  "flex items-center gap-3 py-1 px-2 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded text-card-foreground",
-                  isPending && "opacity-70"
+                  "text-card-foreground flex items-center gap-3 rounded px-2 py-1 transition-colors hover:bg-blue-50 hover:text-blue-600",
+                  isPending && "opacity-70",
                 )}
                 disabled={isPending}
               >
@@ -102,7 +102,7 @@ export function ShoppingListClient({
                 <button
                   type="button"
                   onClick={() => openRatingModal(item.productId, item.name)}
-                  className="p-2 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded"
+                  className="rounded p-2 transition-colors hover:bg-blue-50 hover:text-blue-600"
                 >
                   <Star className="h-4 w-4" />
                   <span className="sr-only">Rate {item.name}</span>
@@ -114,29 +114,29 @@ export function ShoppingListClient({
       </div>
 
       {pendingItems.length === 0 && (
-        <div className="text-center py-4 text-muted-foreground">
+        <div className="text-muted-foreground py-4 text-center">
           No items in your shopping list. Add some items above!
         </div>
       )}
 
       {completedItems.length > 0 && (
         <div className="space-y-2">
-          <div className="text-sm font-medium text-muted-foreground mb-2">
+          <div className="text-muted-foreground mb-2 text-sm font-medium">
             Completed ({completedItems.length})
           </div>
           {completedItems.map((item) => (
             <div
               key={item.id}
-              className="flex justify-between items-center gap-3 p-3 rounded-lg border bg-muted/30"
+              className="bg-muted/30 flex items-center justify-between gap-3 rounded-lg border p-3"
             >
               <form action={updateShoppingListAction}>
                 <input type="hidden" name="id" value={item.id} />
                 <input type="hidden" name="action" value="TOGGLE" />
                 <button
-                  className="flex items-center gap-3 hover:bg-blue-50 hover:text-blue-600 transition-colors rounded px-2 py-1 text-muted-foreground"
+                  className="text-muted-foreground flex items-center gap-3 rounded px-2 py-1 transition-colors hover:bg-blue-50 hover:text-blue-600"
                   disabled={isPending}
                 >
-                  <RotateCcw className="h-4 w-4 text-blue-600 flex-shrink-0" />
+                  <RotateCcw className="h-4 w-4 flex-shrink-0 text-blue-600" />
                   <span className="line-through">{item.name}</span>
                 </button>
               </form>
@@ -144,7 +144,7 @@ export function ShoppingListClient({
                 <input type="hidden" name="id" value={item.id} />
                 <input type="hidden" name="action" value="DELETE" />
                 <button
-                  className="p-2 hover:bg-red-50 hover:text-red-600 transition-colors rounded"
+                  className="rounded p-2 transition-colors hover:bg-red-50 hover:text-red-600"
                   title="Remove item"
                   disabled={isPending}
                 >

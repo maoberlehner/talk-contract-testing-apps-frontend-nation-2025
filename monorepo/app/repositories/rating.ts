@@ -1,5 +1,6 @@
 import createClient from "openapi-fetch";
-import type { paths, components } from "./service-rating";
+
+import type { components, paths } from "./service-rating";
 
 const client = createClient<paths>({
   baseUrl:
@@ -13,7 +14,7 @@ export type CreateRatingRequest = components["schemas"]["RatingRequest"];
 export type AverageRating = components["schemas"]["AverageRatingResponse"];
 
 export const createRating = async (
-  rating: CreateRatingRequest
+  rating: CreateRatingRequest,
 ): Promise<Rating> => {
   const { data, error } = await client.POST("/ratings", {
     body: rating,
@@ -27,7 +28,7 @@ export const createRating = async (
 };
 
 export const getAverageRating = async (
-  productId: string
+  productId: string,
 ): Promise<AverageRating> => {
   const { data, error } = await client.GET("/ratings/average/{productId}", {
     params: {

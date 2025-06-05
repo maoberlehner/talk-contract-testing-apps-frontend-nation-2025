@@ -25,7 +25,7 @@ it("should be possible to complete items", async ({ driver }) => {
   await driver.getByRole("button", { name: "Milk", exact: true }).click();
 
   await expect(
-    driver.getByRole("button", { name: "Delete item Milk", exact: true })
+    driver.getByRole("button", { name: "Delete item Milk", exact: true }),
   ).toBeVisible();
 });
 
@@ -39,7 +39,7 @@ it("should be possible delete a completed item", async ({ driver }) => {
     .click();
 
   await expect(
-    driver.getByRole("button", { name: "Delete item Bread", exact: true })
+    driver.getByRole("button", { name: "Delete item Bread", exact: true }),
   ).not.toBeVisible();
 });
 
@@ -61,6 +61,6 @@ it("it should be possible to rate items", async ({ driver }) => {
     .click();
 
   await expect(
-    driver.getByText("Average rating: 3", { exact: true })
+    driver.getByText("Average rating: 3", { exact: true }),
   ).toBeVisible();
 });

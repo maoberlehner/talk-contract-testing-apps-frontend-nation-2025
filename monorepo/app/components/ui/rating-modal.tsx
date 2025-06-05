@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
+
 import { Button } from "./button";
-import { StarRating } from "./star-rating";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./dialog";
+import { StarRating } from "./star-rating";
 
 interface RatingModalProps {
   isOpen: boolean;
@@ -36,7 +37,7 @@ export function RatingModal({
         </DialogHeader>
 
         <div className="mb-4">
-          <p className="text-sm text-muted-foreground mb-2">
+          <p className="text-muted-foreground mb-2 text-sm">
             How would you rate <strong>{productName}</strong>?
           </p>
           <div className="flex justify-center">

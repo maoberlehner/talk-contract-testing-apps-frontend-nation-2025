@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { ShoppingListClient } from "@/app/shopping-list-client";
+import { Card, CardContent } from "@/components/ui/card";
 import { getAllItems } from "@/repositories/shopping-list";
 
 export const dynamic = "force-dynamic";
