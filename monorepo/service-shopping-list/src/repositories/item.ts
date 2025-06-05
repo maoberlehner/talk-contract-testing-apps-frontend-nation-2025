@@ -1,7 +1,9 @@
 import { randomUUID } from "node:crypto";
+
+import { z } from "zod";
+
 import type { components } from "../service-shopping-list.d.ts";
 import { serviceProduct } from "../utils/api-client.ts";
-import z from "zod";
 
 export const itemSchema: z.ZodType<
   components["schemas"]["ShoppingListItemResponse"]
@@ -61,7 +63,7 @@ export const list = async (): Promise<Item[]> => {
 
 export const update = async (
   id: Item["id"],
-  itemPartial: Partial<ItemCreate>
+  itemPartial: Partial<ItemCreate>,
 ): Promise<Item> => {
   const item = items.find((x) => x.id === id);
   if (!item) throw new Error(`Item with id ${id} does not exist!`);

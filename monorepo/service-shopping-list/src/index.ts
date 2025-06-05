@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { createHonoOpenApiRouter } from "openapi-ts-router";
 import { zValidator } from "validation-adapters/zod";
-import z from "zod";
+import { z } from "zod";
 
 import {
   add,
