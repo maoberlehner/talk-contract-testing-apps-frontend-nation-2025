@@ -1,0 +1,13 @@
+{
+  "name": "template",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "format:check": "prettier --check --ignore-path .gitignore .",
+    "format": "prettier --write --ignore-path .gitignore ."
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.12"
+  }
+}
