@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
-import z from "zod";
+
+import { z } from "zod";
 
 import type { components } from "../service-rating.d.ts";
 
@@ -50,7 +51,7 @@ export const list = async (options?: {
 
 export const update = async (
   id: Rating["id"],
-  ratingPartial: Partial<RatingCreate>
+  ratingPartial: Partial<RatingCreate>,
 ): Promise<Rating> => {
   const rating = ratings.find((x) => x.id === id);
   if (!rating) throw new Error(`Rating with id ${id} does not exist!`);

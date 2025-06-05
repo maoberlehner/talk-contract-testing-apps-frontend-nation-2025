@@ -3,15 +3,15 @@ import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { createHonoOpenApiRouter } from "openapi-ts-router";
 import { zValidator } from "validation-adapters/zod";
-import z from "zod";
+import { z } from "zod";
 
 import {
   add,
+  getAverage,
   list,
+  ratingCreateSchema,
   remove,
   update,
-  getAverage,
-  ratingCreateSchema,
 } from "./repositories/rating.ts";
 import type { paths } from "./service-rating.d.ts";
 
@@ -32,12 +32,12 @@ router.get("/ratings", {
   queryValidator: zValidator(
     z.object({
       productId: z.string().optional(),
-    })
+    }),
   ),
   handler: async (c) => {
     const { productId } = c.req.valid("query");
     return c.json(
-      await list(productId ? { filter: { productId } } : undefined)
+      await list(productId ? { filter: { productId } } : undefined),
     );
   },
 });
@@ -47,7 +47,7 @@ router.put("/ratings/:ratingId", {
   pathValidator: zValidator(
     z.object({
       ratingId: z.string(),
-    })
+    }),
   ),
   handler: async (c) => {
     const rating = await c.req.valid("json");
@@ -60,7 +60,7 @@ router.del("/ratings/:ratingId", {
   pathValidator: zValidator(
     z.object({
       ratingId: z.string(),
-    })
+    }),
   ),
   handler: async (c) => {
     const { ratingId } = c.req.valid("param");
@@ -74,7 +74,7 @@ router.get("/ratings/average/:productId", {
   pathValidator: zValidator(
     z.object({
       productId: z.string(),
-    })
+    }),
   ),
   handler: async (c) => {
     const { productId } = c.req.valid("param");
@@ -93,5 +93,5 @@ serve(
   },
   (info) => {
     console.log(`Server is running on http://localhost:${info.port}`);
-  }
+  },
 );
