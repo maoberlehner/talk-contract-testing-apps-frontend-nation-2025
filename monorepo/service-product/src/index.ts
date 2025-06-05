@@ -3,7 +3,7 @@ import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { createHonoOpenApiRouter } from "openapi-ts-router";
 import { zValidator } from "validation-adapters/zod";
-import z from "zod";
+import { z } from "zod";
 
 import {
   add,
@@ -31,7 +31,7 @@ router.get("/products", {
   queryValidator: zValidator(
     z.object({
       name: z.string().optional(),
-    })
+    }),
   ),
   handler: async (c) => {
     const { name } = c.req.valid("query");
@@ -44,7 +44,7 @@ router.put("/products/:productId", {
   pathValidator: zValidator(
     z.object({
       productId: z.string(),
-    })
+    }),
   ),
   handler: async (c) => {
     const item = await c.req.valid("json");
@@ -57,7 +57,7 @@ router.del("/products/:productId", {
   pathValidator: zValidator(
     z.object({
       productId: z.string(),
-    })
+    }),
   ),
   handler: async (c) => {
     const { productId } = c.req.valid("param");
@@ -77,5 +77,5 @@ serve(
   },
   (info) => {
     console.log(`Server is running on http://localhost:${info.port}`);
-  }
+  },
 );

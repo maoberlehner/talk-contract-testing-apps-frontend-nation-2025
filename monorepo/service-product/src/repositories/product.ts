@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
-import z from "zod";
+
+import { z } from "zod";
 
 import type { components } from "../service-product.d.ts";
 
@@ -40,7 +41,7 @@ export const list = async ({
 
 export const update = async (
   id: Product["id"],
-  productPartial: Partial<ProductCreate>
+  productPartial: Partial<ProductCreate>,
 ): Promise<Product> => {
   const product = products.find((x) => x.id === id);
   if (!product) throw new Error(`Product with id ${id} does not exist!`);
